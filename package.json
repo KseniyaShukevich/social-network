@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test:cypress": "start-server-and-test start http://localhost:3000 cypress:headless",
     "test:jest": "jest",
     "container": "npm run build && npm run start",
     "image": "npm install && npm run build",
