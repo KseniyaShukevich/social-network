@@ -1,11 +1,13 @@
 FROM node
 
-COPY . .
+COPY package.json .
 
-RUN npm run image
+RUN npm install
+
+COPY . .
 
 ENV PORT 3000
 
 EXPOSE $PORT
 
-CMD ["npm", "run", "start"]
+CMD ["npm", "run", "container"]
