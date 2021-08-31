@@ -3,12 +3,12 @@ import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    borderRadius: theme.spacing(6),
+    borderRadius: theme.spacing(4),
     backgroundColor: '#f0f0f3',
     boxShadow: '10px 10px 21px #d3d3d6, -10px -10px 21px #fff',
-    padding: theme.spacing(4),
+    overflow: 'hidden',
     [theme.breakpoints.down(500)]: {
-      borderRadius: theme.spacing(4),
+      borderRadius: theme.spacing(2),
     },
   },
 }));
