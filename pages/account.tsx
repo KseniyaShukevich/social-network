@@ -15,18 +15,26 @@ const useStyles = makeStyles((theme) => ({
   },
   chats: {
     height: 'calc(100vh - 200px)',
-    width: 200,
+    width: 250,
     minHeight: 300, // ???
+    padding: theme.spacing(4),
   },
   block: {
     width: 'calc(100% - 280px)',
   },
-  containerInfo: {
+  containerProfile: {
     marginBottom: theme.spacing(2),
+  },
+  containerInfo: {
+    marginLeft: theme.spacing(2),
   },
   info: {
     height: 100,
+    padding: theme.spacing(4),
   },
+  blog: {
+    padding: theme.spacing(4),
+  }
 }));
 
 const Account: React.FC = () => {
@@ -40,15 +48,17 @@ const Account: React.FC = () => {
             <div className={classes.chats}>Chats</div>
           </MyContainer>
           <Box className={classes.block}>
-            <div className={classes.containerInfo}>
+            <Box display='flex' className={classes.containerProfile}>
               <CardProfile />
-              <MyContainer>
-                <div className={classes.info}>Account</div>
-              </MyContainer>
-            </div>
+              <div className={classes.containerInfo}>
+                <MyContainer>
+                  <div className={classes.info}>Info</div>
+                </MyContainer>
+              </div>
+            </Box>
             <div>
               <MyContainer>
-                <div>Blog</div>
+                <div className={classes.blog}>Blog</div>
               </MyContainer>
             </div>
           </Box>

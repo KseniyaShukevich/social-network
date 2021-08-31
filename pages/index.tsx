@@ -12,10 +12,10 @@ import Container from '@material-ui/core/Container';
 const useStyles = makeStyles((theme) => ({
   formControl: {
     width: '100%',
-    padding: theme.spacing(2),
+    padding: theme.spacing(8),
     [theme.breakpoints.down(500)]: {
       textAlign: 'center',
-      padding: 0,
+      padding: theme.spacing(6),
     },
   },
   heading: {

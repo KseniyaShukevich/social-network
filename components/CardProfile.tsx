@@ -1,13 +1,21 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from './Container';
-import { useRef, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import CloseIcon from '@material-ui/icons/Close';
 
 const useStyles = makeStyles((theme) => ({
   box: {
     width: 250,
     height: 250,
     overflow: 'hidden',
+    position: 'relative',
+  },
+  center: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   arr_container: {
     position: 'absolute',
@@ -22,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     cursor: 'pointer',
     transition: 'all .4s',
   },
-  arr_container_i: {
+  arr_container_icon: {
     transform: 'rotate(45deg)',
   },
   left_container: {
@@ -33,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 23,
     padding: '40px 0 0 20px',
     transition: 'all .4s',
+    color: theme.palette.common.white,
   },
   off: {
     transform: 'translate(-80%, -80%) rotate(90deg)',
@@ -47,18 +56,24 @@ const useStyles = makeStyles((theme) => ({
 
 const CardProfile: React.FC = () => {
   const classes = useStyles();
-  const [isActiveArr, setIsActiveArr] = useState<boolean>(false);
-  const [isOffLeftContainer, setIsOffLeftContainer] = useState<boolean>(true);
-  const [isActiveLeftContainer, setIsActiveLeftContainer] = useState<boolean>(false);
+  const cancel = useRef<any>(null);
+  const arr = useRef<any>(null);
+  const leftContainer = useRef<any>(null);
 
-  const handleClick = () => {
-    console.log('CLICK');
-    setIsActiveArr((prev) => !prev);
-    setIsOffLeftContainer((prev) => !prev);
-    setIsActiveLeftContainer((prev) => !prev);
-    // setIsActiveArr(true);
-    // setIsOffLeftContainer(false);
-    // setIsActiveLeftContainer(true);
+  const handleOpen = () => {
+    arr.current.classList.add(classes.active_arr);
+    if (leftContainer.current.classList.contains(classes.off)) {
+      leftContainer.current.classList.remove(classes.off);
+      leftContainer.current.classList.add(classes.active);
+    }
+  }
+
+  const handleClose = () => {
+    arr.current.classList.remove(classes.active_arr);
+    if (leftContainer.current.classList.contains(classes.active)) {
+      leftContainer.current.classList.add(classes.off);
+      leftContainer.current.classList.remove(classes.active);
+    }
   }
 
   return (
@@ -75,22 +90,22 @@ const CardProfile: React.FC = () => {
           <p>Evan Smith</p>
           <p>Front-end developer</p>
         </div>
-        <Box
-          onClick={handleClick}
-          // ref={arr}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-          className={classes.arr_container + ' ' + isActiveArr ? classes.active_arr : ''}
+        <div
+          ref={arr}
+          onClick={handleOpen}
+          className={classes.arr_container + ' ' + classes.center}
         >
-          <i className={classes.arr_container_i}>Arrow</i>
-        </Box>
+          <ArrowForwardIcon className={classes.arr_container_icon} />
+        </div>
 
         <div
-          // ref={leftContainer}
-          className={classes.left_container + ' ' + isOffLeftContainer ? classes.off : isActiveLeftContainer ? classes.active : ''}
+          ref={leftContainer}
+          className={classes.left_container + ' ' + classes.off}
         >
-          <p>Skills</p>
+          <p>
+             j f hfekj fk jasfjf jkaj wfjw fjbakj fbajbfkj bwfjkwbfjabjfbfasb fsaj a kjfj agwg fjak skfasjh
+          </p>
+          {/* <p>Skills</p>
           <div>
             <div>HTML</div>
             <div>CSS</div>
@@ -102,17 +117,14 @@ const CardProfile: React.FC = () => {
             <i>linkedin</i>
             <i>twitter</i>
             <i>facebook</i>
-          </div>
-          <Box
-            // ref={cancel}
-            onClick={handleClick}
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            className={classes.arr_container}
+          </div> */}
+          <div
+            ref={cancel}
+            onClick={handleClose}
+            className={classes.arr_container + ' ' + classes.center}
           >
-            <i>Cancel</i>
-          </Box>
+            <CloseIcon />
+          </div>
         </div>
       </Box>
     </Container>
