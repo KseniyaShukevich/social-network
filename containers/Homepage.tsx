@@ -8,6 +8,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
+import Link from 'next/link';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -37,9 +38,13 @@ const useStyles = makeStyles((theme) => ({
       width: '100%',
     },
   },
+  link: {
+    textDecoration: 'none',
+    color: theme.palette.primary.main,
+  },
   button: {
-    width: '48%',
-    marginTop: theme.spacing(3),
+    width: '100%',
+    marginTop: theme.spacing(1),
   },
 }));
 
@@ -52,7 +57,7 @@ const Home: NextPage = () => {
         <MyContainer>
           <FormControl className={classes.formControl}>
             <Typography variant="h6" className={classes.heading}>
-              Login / Signup
+              Login
             </Typography>
             <Box
               display="flex"
@@ -66,12 +71,12 @@ const Home: NextPage = () => {
                 className={classes.field}
               />
             </Box>
-            <Box display="flex" justifyContent="space-between">
+            <Box>
+              <Link href="/signup">
+                <a className={classes.link}>Signup</a>
+              </Link>
               <Button variant="outlined" className={classes.button}>
                 Login
-              </Button>
-              <Button variant="outlined" className={classes.button}>
-                Signup
               </Button>
             </Box>
           </FormControl>
