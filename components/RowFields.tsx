@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Box from '@material-ui/core/Box';
+import { ChangeEvent } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   containerFields: {
@@ -21,15 +22,23 @@ const useStyles = makeStyles((theme) => ({
 interface IProps {
   firstLabel: string;
   firstType?: string;
+  firstValue: string;
   secondLabel: string;
   secondTyle?: string;
+  secondValue: string;
+  firstHandleChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  secondHandleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RowFields: React.FC<IProps> = ({
   firstLabel,
   firstType = '',
+  firstValue,
   secondLabel,
   secondTyle = '',
+  secondValue,
+  firstHandleChange,
+  secondHandleChange,
 }) => {
   const classes = useStyles();
 
@@ -41,13 +50,17 @@ const RowFields: React.FC<IProps> = ({
     >
       <TextField
         label={firstLabel}
+        value={firstValue}
         type={firstType}
         className={classes.field}
+        onChange={firstHandleChange}
       />
       <TextField
         label={secondLabel}
+        value={secondValue}
         type={secondTyle}
         className={classes.field}
+        onChange={secondHandleChange}
       />
     </Box>
   );

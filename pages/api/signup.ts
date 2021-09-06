@@ -3,6 +3,9 @@ import db from '../../models';
 import { users } from '../../seeders/users';
 
 export default function signUpUser(req: NextApiRequest, res: NextApiResponse) {
+  if (req.method === 'POST') {
+    
+  }
   users.map((user) => {
     db.User.create(user);
   });
