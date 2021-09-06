@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 require('dotenv').config();
 
+// console.log(process.env.DB_USER, process.env.DB_PASS, process.env.DB_NAME);
+
 module.exports = {
   "development": {
     "username": process.env.DB_USER,
