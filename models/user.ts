@@ -11,6 +11,8 @@ interface UserAttributes {
   lastName: string,
   email: string,
   password: string,
+  isActivated: boolean,
+  activationLink: string,
 }
 
 module.exports = (sequelize: any, DataTypes: any) => {
@@ -26,6 +28,8 @@ module.exports = (sequelize: any, DataTypes: any) => {
      lastName!: string;
      email!: string;
      password!: string;
+     isActivated!: boolean;
+     activationLink!: string;
     static associate(models: any) {
       // define association here
     }
@@ -51,6 +55,15 @@ module.exports = (sequelize: any, DataTypes: any) => {
       unique: true,
     },
     password: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    isActivated: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false,
+    },
+    activationLink: {
       type: DataTypes.STRING,
       allowNull: false,
     }

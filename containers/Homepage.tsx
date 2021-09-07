@@ -1,5 +1,5 @@
 import type { NextPage } from 'next';
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useState, MouseEvent } from 'react';
 import FormLayout from '../components/FormLayout';
 import LinkElement from '../components/LinkElement';
 import RowFields from '../components/RowFields';
@@ -10,14 +10,18 @@ const Login: NextPage = () => {
 
   const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-  }
+  };
 
   const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-  }
+  };
+
+  const handleSubmit = (e: MouseEvent) => {
+    console.log('LOGIN');
+  };
 
   return (
-    <FormLayout heading="Login" textButton="Login">
+    <FormLayout heading="Login" textButton="Login" handleSubmit={handleSubmit}>
       <RowFields
         firstLabel="email"
         firstValue={email}

@@ -6,7 +6,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 import Container from '@material-ui/core/Container';
-import { ReactElement } from 'react';
+import { ReactElement, MouseEvent } from 'react';
 
 const useStyles = makeStyles((theme) => ({
   formControl: {
@@ -33,9 +33,15 @@ interface IProps {
   children: ReactElement | Array<ReactElement>;
   heading: string;
   textButton: string;
+  handleSubmit: (e: MouseEvent) => void;
 }
 
-const FormLayout: React.FC<IProps> = ({ children, heading, textButton }) => {
+const FormLayout: React.FC<IProps> = ({
+  children,
+  heading,
+  textButton,
+  handleSubmit,
+}) => {
   const classes = useStyles();
 
   return (
@@ -48,7 +54,11 @@ const FormLayout: React.FC<IProps> = ({ children, heading, textButton }) => {
             </Typography>
             {children}
             <Box display="flex" justifyContent="space-between">
-              <Button variant="outlined" className={classes.button}>
+              <Button
+                variant="outlined"
+                className={classes.button}
+                onClick={(e: MouseEvent) => handleSubmit(e)}
+              >
                 {textButton}
               </Button>
             </Box>
