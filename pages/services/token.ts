@@ -33,7 +33,7 @@ export default class tokenService {
     });
 
     if (tokenData) {
-      tokenData.refreshToken = refreshToken;
+      tokenData.setDataValue('refreshToken', refreshToken);
       return tokenData.save();
     }
 

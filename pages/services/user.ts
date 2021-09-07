@@ -17,11 +17,27 @@ export default class UserService {
       password: hashedPassword,
       activationLink,
     });
-    await mailService.sendActivationMail(body.email, activationLink);
+    const link = `${process.env.API_URL}/api/activate/${activationLink}`;
+    await mailService.sendActivationMail(body.email, link);
     const userDto: UserDto = new UserDto(user.dataValues);
     const tokens: ITokens = tokenService.generateTokens({ ...userDto });
     await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
     return { ...tokens, user: userDto };
+  }
+
+  static async activate(activationLink: string) {
+    const user = await db.User.findOne({
+      where: {
+        activationLink,
+      },
+    });
+
+    if (!user) {
+      throw new Error('Incorrect activation link');
+    }
+
+    user.setDataValue('isActivated', true);
+    await user.save();
   }
 }
