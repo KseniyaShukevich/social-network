@@ -14,7 +14,10 @@ const Login: NextPage = () => {
   const router = useRouter();
 
   const onSubmit = async (data: IUserLogin): Promise<void> => {
-    const response: UserResponse | MessageResponse = await request('login', data);
+    const response: UserResponse | MessageResponse = await request(
+      'login',
+      data
+    );
     if ((response as UserResponse).user) {
       router.push(`/account/${(response as UserResponse).user.id}`);
     }

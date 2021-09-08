@@ -1,10 +1,10 @@
-import MessageResponse from "../interfaces/MessageResponse";
-import UserResponse from "../interfaces/UserResponse";
+import MessageResponse from '../interfaces/MessageResponse';
+import UserResponse from '../interfaces/UserResponse';
 
 export default async function request(
   url: string,
   data: any,
-  method = 'POST',
+  method = 'POST'
 ): Promise<UserResponse | MessageResponse> {
   const response = await fetch(`/api/${url}`, {
     method,
