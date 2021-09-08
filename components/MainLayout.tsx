@@ -13,7 +13,7 @@ interface IProps {
   children: ReactElement | string;
 }
 
-const Container: React.FC<IProps> = ({ children }) => {
+const MainLayout: React.FC<IProps> = ({ children }) => {
   const classes = useStyles();
 
   return (
@@ -31,4 +31,4 @@ const Container: React.FC<IProps> = ({ children }) => {
   );
 };
 
-export default Container;
+export default MainLayout;
