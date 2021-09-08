@@ -10,6 +10,7 @@ import request from '../services/request';
 const Signup: NextPage = () => {
   const onSubmit = async (data: IUserRequest) => {
     const response: any = await request('signup', data);
+    console.log('RESPONSE: ', response);
   };
 
   const validationSchema = yup.object().shape({

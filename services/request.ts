@@ -3,7 +3,7 @@ export default async function request(
   data: any,
   method = 'POST',
 ): Promise<any> {
-  const response: any = await fetch(`/api/${url}`, {
+  const response = await fetch(`/api/${url}`, {
     method,
     headers: {
       'Content-Type': 'application/json',

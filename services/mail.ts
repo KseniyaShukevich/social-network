@@ -1,7 +1,7 @@
 import nodemailer from 'nodemailer';
 
 class mailService {
-  static transporter: any = nodemailer.createTransport({
+  static transporter = nodemailer.createTransport({
     service: 'gmail',
     secure: false,
     auth: {
