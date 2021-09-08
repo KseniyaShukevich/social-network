@@ -40,4 +40,12 @@ export default class tokenService {
     const token: any = await db.Token.create({ idUser, refreshToken });
     return token.dataValues.refreshToken;
   }
+
+  static async removeToken(refreshToken: string): Promise<void> {
+    await db.Token.destroy({
+      where: {
+        refreshToken,
+      },
+    });
+  }
 }

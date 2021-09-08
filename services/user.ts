@@ -85,4 +85,8 @@ export default class UserService {
 
     return await generateUserData(user.dataValues);
   }
+
+  static async logout(refreshToken: string): Promise<void> {
+    await tokenService.removeToken(refreshToken);
+  }
 }
