@@ -7,8 +7,14 @@ import * as yup from 'yup';
 import IUserLogin from '../interfaces/IUserLogin';
 
 const Login: NextPage = () => {
-  const onSubmit = (data: IUserLogin) => {
-    console.log('LOGIN');
+  const onSubmit = async (data: IUserLogin): Promise<void> => {
+    const response: any = await fetch('http://localhost:3000/api/login', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
   };
 
   const validationSchema = yup.object().shape({
@@ -23,8 +29,6 @@ const Login: NextPage = () => {
   return (
     <Formik
       initialValues={{
-        firstName: '',
-        lastName: '',
         email: '',
         password: '',
       }}
@@ -66,7 +70,7 @@ const Login: NextPage = () => {
             secondHandleBlur={handleBlur}
             secondHandleChange={handleChange}
           />
-          <LinkElement href='/signup' text={'Signup'} />
+          <LinkElement href="/signup" text={'Signup'} />
         </FormLayout>
       )}
     </Formik>

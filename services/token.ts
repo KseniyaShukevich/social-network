@@ -1,7 +1,7 @@
 import jwt from 'jsonwebtoken';
-import db from '../../models';
-import UserDto from '../../dtos/user-dto';
-import ITokens from '../../interfaces/ITokens';
+import db from '../models';
+import UserDto from '../dtos/user-dto';
+import ITokens from '../interfaces/ITokens';
 
 export default class tokenService {
   static generateTokens(payload: UserDto): ITokens {

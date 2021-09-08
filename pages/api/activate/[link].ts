@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import UserService from '../../services/user';
+import UserService from '../../../services/user';
 
 export default async function activate(
   req: NextApiRequest,

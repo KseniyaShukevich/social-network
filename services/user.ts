@@ -1,14 +1,14 @@
-import db from '../../models';
+import db from '../models';
 import bcrypt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import mailService from '../services/mail';
-import tokenService from '../services/token';
-import UserDto from '../../dtos/user-dto';
-import ITokens from '../../interfaces/ITokens';
-import IUserResponse from '../../interfaces/IUserResponse';
-import IUserRequest from '../../interfaces/IUserRequest';
-import MessageResponse from '../../interfaces/IMessageResponse';
-import IDataUser from '../../interfaces/IDataUser';
+import mailService from './mail';
+import tokenService from './token';
+import UserDto from '../dtos/user-dto';
+import ITokens from '../interfaces/ITokens';
+import IUserResponse from '../interfaces/IUserResponse';
+import IUserRequest from '../interfaces/IUserRequest';
+import MessageResponse from '../interfaces/IMessageResponse';
+import IDataUser from '../interfaces/IDataUser';
 
 const generateUserData = async (data: IDataUser): Promise<IUserResponse> => {
   const userDto: UserDto = new UserDto(data);

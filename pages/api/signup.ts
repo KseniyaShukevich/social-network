@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import UserService from '../services/user';
+import UserService from '../../services/user';
 import cookie from 'cookie';
 import IUserResponse from '../../interfaces/IUserResponse';
 import MessageResponse from '../../interfaces/IMessageResponse';
@@ -24,7 +24,7 @@ export default async function signUpUser(
           maxAge: 30 * 24 * 60 * 60,
         })
       );
-      
+
       return res.json(userData);
     } else {
       return res.status(405).json({ message: 'We only support POST' });
