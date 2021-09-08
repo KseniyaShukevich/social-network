@@ -9,6 +9,7 @@ import UserResponse from '../interfaces/UserResponse';
 import IUserRequest from '../interfaces/IUserRequest';
 import MessageResponse from '../interfaces/MessageResponse';
 import IDataUser from '../interfaces/IDataUser';
+import jwt from 'jsonwebtoken';
 
 const generateUserData = async (data: IDataUser): Promise<UserResponse> => {
   const userDto: UserDto = new UserDto(data);
@@ -88,5 +89,26 @@ export default class UserService {
 
   static async logout(refreshToken: string): Promise<void> {
     await tokenService.removeToken(refreshToken);
+  }
+
+  static async refresh(refreshToken: string) {
+    if (!refreshToken) {
+      return new MessageResponse(401, 'No refresh token');
+    }
+
+    const userData: any = tokenService.validateRefreshToken(refreshToken);
+    const tokenFromDB = tokenService.findToken(refreshToken);
+
+    if (!userData || !tokenFromDB) {
+      return new MessageResponse(401, 'This user is not logged in');
+    }
+
+    const user = await db.User.findOne({
+      where: {
+        id: userData.id,
+      },
+    });
+
+    return await generateUserData(user.dataValues);
   }
 }

@@ -48,4 +48,32 @@ export default class tokenService {
       },
     });
   }
+  
+  static async validateAccessToken(token: string) {
+    try {
+      const userData = jwt.verify(token, process.env.JWT_ACCESS_SECRET as string);
+    } catch(e) {
+      return null;
+    }
+  }
+
+  static async validateRefreshToken(token: string) {
+    try {
+      const userData = jwt.verify(token, process.env.JWT_REFRESH_SECRET as string);
+      
+      return userData;
+    } catch(e) {
+      return null;
+    }
+  }
+
+  static async findToken(refreshToken: string) {
+    const tokenData = await db.Token.findOne({
+      where: {
+        refreshToken,
+      },
+    });
+
+    return tokenData.dataValues;
+  }
 }
