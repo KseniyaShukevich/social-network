@@ -7,9 +7,31 @@ import UserDto from '../../dtos/user-dto';
 import ITokens from '../../interfaces/ITokens';
 import IUserResponse from '../../interfaces/IUserResponse';
 import IUserRequest from '../../interfaces/IUserRequest';
+import MessageResponse from '../../interfaces/IMessageResponse';
+import IDataUser from '../../interfaces/IDataUser';
+
+const generateUserData = async (data: IDataUser): Promise<IUserResponse> => {
+  const userDto: UserDto = new UserDto(data);
+  const tokens: ITokens = tokenService.generateTokens({ ...userDto });
+  await tokenService.saveToken(userDto.id, tokens.refreshToken);
+
+  return { ...tokens, user: userDto };
+};
 
 export default class UserService {
-  static async registration(body: IUserRequest): Promise<IUserResponse> {
+  static async registration(
+    body: IUserRequest
+  ): Promise<IUserResponse | MessageResponse> {
+    const userData = await db.User.findOne({
+      where: {
+        email: body.email,
+      },
+    });
+
+    if (userData) {
+      return new MessageResponse(401, 'This user already registred');
+    }
+
     const hashedPassword = await bcrypt.hash(body.password, 3);
     const activationLink: string = uuidv4();
     const user = await db.User.create({
@@ -19,11 +41,8 @@ export default class UserService {
     });
     const link = `${process.env.API_URL}/api/activate/${activationLink}`;
     await mailService.sendActivationMail(body.email, link);
-    const userDto: UserDto = new UserDto(user.dataValues);
-    const tokens: ITokens = tokenService.generateTokens({ ...userDto });
-    await tokenService.saveToken(userDto.id, tokens.refreshToken);
 
-    return { ...tokens, user: userDto };
+    return await generateUserData(user.dataValues);
   }
 
   static async activate(activationLink: string) {
@@ -39,5 +58,31 @@ export default class UserService {
 
     user.setDataValue('isActivated', true);
     await user.save();
+  }
+
+  static async login(
+    email: string,
+    password: string
+  ): Promise<IUserResponse | MessageResponse> {
+    const user = await db.User.findOne({
+      where: {
+        email,
+      },
+    });
+
+    if (!user) {
+      return new MessageResponse(401, 'This user is not registred');
+    }
+
+    const isPasswordsEquals = await bcrypt.compare(
+      password,
+      user.dataValues.password
+    );
+
+    if (!isPasswordsEquals) {
+      return new MessageResponse(401, 'Password is not correct');
+    }
+
+    return await generateUserData(user.dataValues);
   }
 }
