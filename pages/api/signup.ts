@@ -1,8 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
 import UserService from '../../services/user';
 import cookie from 'cookie';
-import IUserResponse from '../../interfaces/IUserResponse';
-import MessageResponse from '../../interfaces/IMessageResponse';
+import UserResponse from '../../interfaces/UserResponse';
+import MessageResponse from '../../interfaces/MessageResponse';
 
 export default async function signUpUser(
   req: NextApiRequest,
@@ -10,7 +10,7 @@ export default async function signUpUser(
 ) {
   try {
     if (req.method === 'POST') {
-      const userData: IUserResponse | MessageResponse =
+      const userData: UserResponse | MessageResponse =
         await UserService.registration(req.body);
 
       if (userData instanceof MessageResponse) {

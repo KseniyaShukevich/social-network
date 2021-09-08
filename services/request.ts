@@ -1,8 +1,11 @@
+import MessageResponse from "../interfaces/MessageResponse";
+import UserResponse from "../interfaces/UserResponse";
+
 export default async function request(
   url: string,
   data: any,
   method = 'POST',
-): Promise<any> {
+): Promise<UserResponse | MessageResponse> {
   const response = await fetch(`/api/${url}`, {
     method,
     headers: {

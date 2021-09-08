@@ -6,10 +6,18 @@ import { Formik } from 'formik';
 import * as yup from 'yup';
 import IUserLogin from '../interfaces/IUserLogin';
 import request from '../services/request';
+import UserResponse from '../interfaces/UserResponse';
+import MessageResponse from '../interfaces/MessageResponse';
+import { useRouter } from 'next/router';
 
 const Login: NextPage = () => {
+  const router = useRouter();
+
   const onSubmit = async (data: IUserLogin): Promise<void> => {
-    const response: any = await request('login', data);
+    const response: UserResponse | MessageResponse = await request('login', data);
+    if ((response as UserResponse).user) {
+      router.push(`/account/${(response as UserResponse).user.id}`);
+    }
   };
 
   const validationSchema = yup.object().shape({
