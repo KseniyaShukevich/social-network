@@ -11,5 +11,5 @@ export default async function request(
     body: JSON.stringify(data),
   });
 
-  return response;
+  return await response.json();
 }
