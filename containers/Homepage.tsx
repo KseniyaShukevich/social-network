@@ -5,16 +5,11 @@ import RowFields from '../components/RowFields';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import IUserLogin from '../interfaces/IUserLogin';
+import request from '../services/request';
 
 const Login: NextPage = () => {
   const onSubmit = async (data: IUserLogin): Promise<void> => {
-    const response: any = await fetch('http://localhost:3000/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(data),
-    });
+    const response: any = await request('login', data);
   };
 
   const validationSchema = yup.object().shape({

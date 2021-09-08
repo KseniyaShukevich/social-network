@@ -5,16 +5,11 @@ import LinkElement from '../components/LinkElement';
 import { Formik } from 'formik';
 import * as yup from 'yup';
 import IUserRequest from '../interfaces/IUserRequest';
+import request from '../services/request';
 
 const Signup: NextPage = () => {
   const onSubmit = async (data: IUserRequest) => {
-      const response: any = await fetch('http://localhost:3000/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
+    const response: any = await request('signup', data);
   };
 
   const validationSchema = yup.object().shape({
@@ -92,7 +87,7 @@ const Signup: NextPage = () => {
             secondHandleBlur={handleBlur}
             secondHandleChange={handleChange}
           />
-          <LinkElement href='/' text={'Login'} />
+          <LinkElement href="/" text={'Login'} />
         </FormLayout>
       )}
     </Formik>
