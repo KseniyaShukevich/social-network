@@ -40,7 +40,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Account: React.FC = () => {
   const router = useRouter();
-  console.log(router.query);
+  // console.log(router.query);
   const classes = useStyles();
 
   return (

@@ -1,6 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Button, Typography } from '@material-ui/core';
 import Container from '@material-ui/core/Container';
+import request from '../services/request';
 
 const useStyles = makeStyles((theme) => ({
   header: {
@@ -16,6 +17,10 @@ const useStyles = makeStyles((theme) => ({
 const Header: React.FC = () => {
   const classes = useStyles();
 
+  const handleClick = async (): Promise<void> => {
+    await request('/logout');
+  };
+
   return (
     <Container>
       <Box
@@ -27,7 +32,7 @@ const Header: React.FC = () => {
         <Typography variant="h4" className={classes.heading}>
           Social Network
         </Typography>
-        <Button>Logout</Button>
+        <Button onClick={handleClick}>Logout</Button>
       </Box>
     </Container>
   );

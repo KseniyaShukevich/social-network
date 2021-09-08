@@ -3,7 +3,7 @@ import UserResponse from '../interfaces/UserResponse';
 
 export default async function request(
   url: string,
-  data: any,
+  data: any = {},
   method = 'POST'
 ): Promise<UserResponse | MessageResponse> {
   const response = await fetch(`/api/${url}`, {
