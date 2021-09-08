@@ -2,67 +2,100 @@ import type { NextPage } from 'next';
 import FormLayout from '../components/FormLayout';
 import RowFields from '../components/RowFields';
 import LinkElement from '../components/LinkElement';
-import { ChangeEvent, useState, MouseEvent } from 'react';
+import { Formik } from 'formik';
+import * as yup from 'yup';
+import IUserRequest from '../interfaces/IUserRequest';
 
 const Signup: NextPage = () => {
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
-
-  const handleChangeFirstName = (e: ChangeEvent<HTMLInputElement>) => {
-    setFirstName(e.target.value);
-  };
-
-  const handleChangeLastName = (e: ChangeEvent<HTMLInputElement>) => {
-    setLastName(e.target.value);
-  };
-
-  const handleChangeEmail = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-  };
-
-  const handleChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-  };
-
-  const handleSubmit = async (e: MouseEvent) => {
-    if (firstName && lastName && email && password) {
+  const onSubmit = async (data: IUserRequest) => {
       const response: any = await fetch('http://localhost:3000/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ firstName, lastName, email, password }),
+        body: JSON.stringify(data),
       });
-    }
   };
 
+  const validationSchema = yup.object().shape({
+    firstName: yup.string().typeError('Should be string').required('Requred'),
+    lastName: yup.string().typeError('Should be string').required('Requred'),
+    email: yup
+      .string()
+      .typeError('Should be string')
+      .email('Input correct email')
+      .required('Requred'),
+    password: yup.string().typeError('Should be string').required('Requred'),
+  });
+
   return (
-    <FormLayout
-      heading="signup"
-      textButton="signup"
-      handleSubmit={handleSubmit}
+    <Formik
+      initialValues={{
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: '',
+      }}
+      validateOnBlur
+      onSubmit={(values) => onSubmit(values)}
+      validationSchema={validationSchema}
     >
-      <RowFields
-        firstLabel="first name"
-        firstValue={firstName}
-        secondLabel="last name"
-        secondValue={lastName}
-        firstHandleChange={handleChangeFirstName}
-        secondHandleChange={handleChangeLastName}
-      />
-      <RowFields
-        firstLabel="email"
-        firstValue={email}
-        secondLabel="password"
-        secondTyle="password"
-        secondValue={password}
-        firstHandleChange={handleChangeEmail}
-        secondHandleChange={handleChangePassword}
-      />
-      <LinkElement href="/" text="Login" />
-    </FormLayout>
+      {({
+        values,
+        errors,
+        touched,
+        handleChange,
+        handleBlur,
+        isValid,
+        handleSubmit,
+        dirty,
+      }) => (
+        <FormLayout
+          heading="signup"
+          disabled={!isValid && !dirty}
+          textButton="signup"
+          handleSubmit={handleSubmit}
+        >
+          <RowFields
+            firstName={'firstName'}
+            firstLabel={'First name'}
+            firstValue={values.firstName}
+            firstType={'text'}
+            firstError={!!(touched.firstName && errors.firstName)}
+            firstTextError={errors.firstName}
+            firstHandleBlur={handleBlur}
+            firstHandleChange={handleChange}
+            secondName={'lastName'}
+            secondLabel={'Last name'}
+            secondValue={values.lastName}
+            secondTyle={'text'}
+            secondError={!!(touched.lastName && errors.lastName)}
+            secondTextError={errors.lastName}
+            secondHandleBlur={handleBlur}
+            secondHandleChange={handleChange}
+          />
+          <RowFields
+            firstName={'email'}
+            firstLabel={'Email'}
+            firstValue={values.email}
+            firstType={'email'}
+            firstError={!!(touched.email && errors.email)}
+            firstTextError={errors.email}
+            firstHandleBlur={handleBlur}
+            firstHandleChange={handleChange}
+            secondName={'password'}
+            secondLabel={'Password'}
+            secondValue={values.password}
+            secondTyle={'password'}
+            secondError={!!(touched.password && errors.password)}
+            secondTextError={errors.password}
+            secondHandleBlur={handleBlur}
+            secondHandleChange={handleChange}
+          />
+          <LinkElement href='/' text={'Login'} />
+        </FormLayout>
+      )}
+    </Formik>
   );
 };
 

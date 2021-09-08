@@ -32,13 +32,15 @@ const useStyles = makeStyles((theme) => ({
 interface IProps {
   children: ReactElement | Array<ReactElement>;
   heading: string;
+  disabled: boolean;
   textButton: string;
-  handleSubmit: (e: MouseEvent) => void;
+  handleSubmit: (e: any) => void;
 }
 
 const FormLayout: React.FC<IProps> = ({
   children,
   heading,
+  disabled,
   textButton,
   handleSubmit,
 }) => {
@@ -55,9 +57,11 @@ const FormLayout: React.FC<IProps> = ({
             {children}
             <Box display="flex" justifyContent="space-between">
               <Button
+                disabled={disabled}
                 variant="outlined"
                 className={classes.button}
                 onClick={(e: MouseEvent) => handleSubmit(e)}
+                type={'submit'}
               >
                 {textButton}
               </Button>

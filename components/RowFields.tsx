@@ -12,7 +12,8 @@ const useStyles = makeStyles((theme) => ({
   field: {
     width: '48%',
     minWidth: 150,
-    marginBottom: theme.spacing(3),
+    height: 70,
+    marginBottom: theme.spacing(1),
     [theme.breakpoints.down(500)]: {
       width: '100%',
     },
@@ -20,23 +21,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface IProps {
+  firstName: string;
+  firstType: string;
   firstLabel: string;
-  firstType?: string;
   firstValue: string;
+  firstError: boolean;
+  firstTextError: string | undefined;
+  secondName: string;
+  secondTyle: string;
   secondLabel: string;
-  secondTyle?: string;
   secondValue: string;
+  secondError: boolean;
+  secondTextError: string | undefined;
+  firstHandleBlur: (e: ChangeEvent) => void;
+  secondHandleBlur: (e: ChangeEvent) => void;
   firstHandleChange: (e: ChangeEvent<HTMLInputElement>) => void;
   secondHandleChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 
 const RowFields: React.FC<IProps> = ({
+  firstName,
+  firstType,
   firstLabel,
-  firstType = '',
   firstValue,
+  firstError,
+  firstTextError,
+  secondName,
+  secondTyle,
   secondLabel,
-  secondTyle = '',
   secondValue,
+  secondError,
+  secondTextError,
+  firstHandleBlur,
+  secondHandleBlur,
   firstHandleChange,
   secondHandleChange,
 }) => {
@@ -49,17 +66,25 @@ const RowFields: React.FC<IProps> = ({
       className={classes.containerFields}
     >
       <TextField
+        name={firstName}
         label={firstLabel}
         value={firstValue}
         type={firstType}
         className={classes.field}
+        error={firstError}
+        helperText={firstError ? firstTextError : ''}
+        onBlur={firstHandleBlur}
         onChange={firstHandleChange}
       />
       <TextField
+        name={secondName}
         label={secondLabel}
         value={secondValue}
         type={secondTyle}
         className={classes.field}
+        error={secondError}
+        helperText={secondError ? secondTextError : ''}
+        onBlur={secondHandleBlur}
         onChange={secondHandleChange}
       />
     </Box>
