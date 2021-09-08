@@ -1,29 +1,28 @@
 import type { NextPage } from 'next';
 import FormLayout from '../components/FormLayout';
-import LinkElement from '../components/LinkElement';
 import RowFields from '../components/RowFields';
+import LinkElement from '../components/LinkElement';
 import { Formik } from 'formik';
 import * as yup from 'yup';
-import IUserLogin from '../interfaces/IUserLogin';
+import IUserRequest from '../interfaces/IUserRequest';
 import request from '../services/request';
 import UserResponse from '../interfaces/UserResponse';
 import MessageResponse from '../interfaces/MessageResponse';
 import { useRouter } from 'next/router';
 
-const Login: NextPage = () => {
+const Signup: NextPage = () => {
   const router = useRouter();
 
-  const onSubmit = async (data: IUserLogin): Promise<void> => {
-    const response: UserResponse | MessageResponse = await request(
-      'login',
-      data
-    );
+  const onSubmit = async (data: IUserRequest) => {
+    const response: UserResponse | MessageResponse = await request('signup', data);
     if ((response as UserResponse).user) {
       router.push(`/account/${(response as UserResponse).user.id}`);
     }
   };
 
   const validationSchema = yup.object().shape({
+    firstName: yup.string().typeError('Should be string').required('Requred'),
+    lastName: yup.string().typeError('Should be string').required('Requred'),
     email: yup
       .string()
       .typeError('Should be string')
@@ -35,6 +34,8 @@ const Login: NextPage = () => {
   return (
     <Formik
       initialValues={{
+        firstName: '',
+        lastName: '',
         email: '',
         password: '',
       }}
@@ -53,11 +54,29 @@ const Login: NextPage = () => {
         dirty,
       }) => (
         <FormLayout
-          heading="login"
+          heading="signup"
           disabled={!isValid && !dirty}
-          textButton="login"
+          textButton="signup"
           handleSubmit={handleSubmit}
         >
+          <RowFields
+            firstName={'firstName'}
+            firstLabel={'First name'}
+            firstValue={values.firstName}
+            firstType={'text'}
+            firstError={!!(touched.firstName && errors.firstName)}
+            firstTextError={errors.firstName}
+            firstHandleBlur={handleBlur}
+            firstHandleChange={handleChange}
+            secondName={'lastName'}
+            secondLabel={'Last name'}
+            secondValue={values.lastName}
+            secondTyle={'text'}
+            secondError={!!(touched.lastName && errors.lastName)}
+            secondTextError={errors.lastName}
+            secondHandleBlur={handleBlur}
+            secondHandleChange={handleChange}
+          />
           <RowFields
             firstName={'email'}
             firstLabel={'Email'}
@@ -76,11 +95,11 @@ const Login: NextPage = () => {
             secondHandleBlur={handleBlur}
             secondHandleChange={handleChange}
           />
-          <LinkElement href="/signup" text={'Signup'} />
+          <LinkElement href="/" text={'Login'} />
         </FormLayout>
       )}
     </Formik>
   );
 };
 
-export default Login;
+export default Signup;

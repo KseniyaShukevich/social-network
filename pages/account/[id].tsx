@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
   blog: {
     padding: theme.spacing(4),
-  }
+  },
 }));
 
 const Account: React.FC = () => {
@@ -51,7 +51,7 @@ const Account: React.FC = () => {
             <div className={classes.chats}>Chats</div>
           </MyContainer>
           <Box className={classes.block}>
-            <Box display='flex' className={classes.containerProfile}>
+            <Box display="flex" className={classes.containerProfile}>
               <CardProfile />
               <div className={classes.containerInfo}>
                 <MyContainer>

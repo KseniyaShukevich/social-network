@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
 import Container from './Container';
-import { useEffect, useState, useRef } from 'react';
+import { useRef } from 'react';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import CloseIcon from '@material-ui/icons/Close';
 

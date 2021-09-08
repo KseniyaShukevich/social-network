@@ -7,5 +7,5 @@ export const users = [
     lastName: 'LastName',
     email: 'example@gmail.com',
     password: 'password',
-  }
-]
+  },
+];
